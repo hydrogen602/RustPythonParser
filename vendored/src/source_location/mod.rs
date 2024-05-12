@@ -204,6 +204,8 @@ impl Eq for SourceFileInner {}
 pub struct SourceLocation {
     pub row: OneIndexed,
     pub column: OneIndexed,
+    /// For selecting a range of text
+    pub end_column: Option<OneIndexed>,
 }
 
 impl Default for SourceLocation {
@@ -211,6 +213,7 @@ impl Default for SourceLocation {
         Self {
             row: OneIndexed::MIN,
             column: OneIndexed::MIN,
+            end_column: None,
         }
     }
 }

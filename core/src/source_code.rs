@@ -152,6 +152,7 @@ impl<'a> LinearLocator<'a> {
         SourceLocation {
             row: self.state.line_number,
             column,
+            end_column: None,
         }
     }
 
@@ -161,6 +162,7 @@ impl<'a> LinearLocator<'a> {
         SourceLocation {
             row: state.line_number,
             column,
+            end_column: None,
         }
     }
 
@@ -226,6 +228,7 @@ impl<'a> LinearLocator<'a> {
             let location = SourceLocation {
                 row: state.line_number,
                 column,
+                end_column: None,
             };
             let source_code = SourceCode::new(self.source, &self.index);
             assert_eq!(
@@ -283,11 +286,11 @@ impl<T> LocatedError<T> {
         LocatedError::from(self)
     }
 
-    pub fn python_location(&self) -> (usize, usize) {
+    pub fn python_location(&self) -> (usize, usize, Option<usize>) {
         if let Some(location) = self.location {
-            (location.row.to_usize(), location.column.to_usize())
+            (location.row.to_usize(), location.column.to_usize(), None)
         } else {
-            (0, 0)
+            (0, 0, None)
         }
     }
 }
@@ -331,6 +334,7 @@ abcdefghi
         let expected: SourceLocation = SourceLocation {
             row: OneIndexed::new(row).unwrap(),
             column: OneIndexed::new(col).unwrap(),
+            end_column: None,
         };
         let actual = locator.locate(input);
         let actual2 = random_locator.locate(input);

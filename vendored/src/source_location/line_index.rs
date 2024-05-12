@@ -96,6 +96,7 @@ impl LineIndex {
             Ok(row) => SourceLocation {
                 row: OneIndexed::from_zero_indexed(row),
                 column: OneIndexed::from_zero_indexed(0),
+                end_column: None,
             },
             Err(next_row) => {
                 // SAFETY: Safe because the index always contains an entry for the offset 0
@@ -117,6 +118,7 @@ impl LineIndex {
                 SourceLocation {
                     row: OneIndexed::from_zero_indexed(row),
                     column: OneIndexed::from_zero_indexed(column),
+                    end_column: None,
                 }
             }
         }
@@ -387,7 +389,8 @@ mod tests {
             loc,
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(0),
-                column: OneIndexed::from_zero_indexed(2)
+                column: OneIndexed::from_zero_indexed(2),
+                end_column: None,
             }
         );
 
@@ -397,7 +400,8 @@ mod tests {
             loc,
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(1),
-                column: OneIndexed::from_zero_indexed(0)
+                column: OneIndexed::from_zero_indexed(0),
+                end_column: None,
             }
         );
 
@@ -406,7 +410,8 @@ mod tests {
             loc,
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(1),
-                column: OneIndexed::from_zero_indexed(5)
+                column: OneIndexed::from_zero_indexed(5),
+                end_column: None,
             }
         );
     }
@@ -421,21 +426,24 @@ mod tests {
             index.source_location(TextSize::from(4), contents),
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(0),
-                column: OneIndexed::from_zero_indexed(4)
+                column: OneIndexed::from_zero_indexed(4),
+                end_column: None,
             }
         );
         assert_eq!(
             index.source_location(TextSize::from(6), contents),
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(1),
-                column: OneIndexed::from_zero_indexed(0)
+                column: OneIndexed::from_zero_indexed(0),
+                end_column: None,
             }
         );
         assert_eq!(
             index.source_location(TextSize::from(7), contents),
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(1),
-                column: OneIndexed::from_zero_indexed(1)
+                column: OneIndexed::from_zero_indexed(1),
+                end_column: None,
             }
         );
     }
@@ -450,21 +458,24 @@ mod tests {
             index.source_location(TextSize::from(4), contents),
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(0),
-                column: OneIndexed::from_zero_indexed(4)
+                column: OneIndexed::from_zero_indexed(4),
+                end_column: None,
             }
         );
         assert_eq!(
             index.source_location(TextSize::from(7), contents),
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(1),
-                column: OneIndexed::from_zero_indexed(0)
+                column: OneIndexed::from_zero_indexed(0),
+                end_column: None,
             }
         );
         assert_eq!(
             index.source_location(TextSize::from(8), contents),
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(1),
-                column: OneIndexed::from_zero_indexed(1)
+                column: OneIndexed::from_zero_indexed(1),
+                end_column: None,
             }
         );
     }
@@ -517,21 +528,24 @@ mod tests {
             index.source_location(TextSize::from(9), contents),
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(0),
-                column: OneIndexed::from_zero_indexed(6)
+                column: OneIndexed::from_zero_indexed(6),
+                end_column: None,
             }
         );
         assert_eq!(
             index.source_location(TextSize::from(11), contents),
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(1),
-                column: OneIndexed::from_zero_indexed(0)
+                column: OneIndexed::from_zero_indexed(0),
+                end_column: None,
             }
         );
         assert_eq!(
             index.source_location(TextSize::from(12), contents),
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(1),
-                column: OneIndexed::from_zero_indexed(1)
+                column: OneIndexed::from_zero_indexed(1),
+                end_column: None,
             }
         );
     }
@@ -551,21 +565,24 @@ mod tests {
             index.source_location(TextSize::from(9), contents),
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(0),
-                column: OneIndexed::from_zero_indexed(6)
+                column: OneIndexed::from_zero_indexed(6),
+                end_column: None,
             }
         );
         assert_eq!(
             index.source_location(TextSize::from(12), contents),
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(1),
-                column: OneIndexed::from_zero_indexed(0)
+                column: OneIndexed::from_zero_indexed(0),
+                end_column: None,
             }
         );
         assert_eq!(
             index.source_location(TextSize::from(13), contents),
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(1),
-                column: OneIndexed::from_zero_indexed(1)
+                column: OneIndexed::from_zero_indexed(1),
+                end_column: None,
             }
         );
     }
@@ -585,7 +602,8 @@ mod tests {
             loc,
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(0),
-                column: OneIndexed::from_zero_indexed(0)
+                column: OneIndexed::from_zero_indexed(0),
+                end_column: None,
             }
         );
 
@@ -594,7 +612,8 @@ mod tests {
             loc,
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(0),
-                column: OneIndexed::from_zero_indexed(5)
+                column: OneIndexed::from_zero_indexed(5),
+                end_column: None,
             }
         );
 
@@ -603,7 +622,8 @@ mod tests {
             loc,
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(0),
-                column: OneIndexed::from_zero_indexed(6)
+                column: OneIndexed::from_zero_indexed(6),
+                end_column: None,
             }
         );
 
@@ -613,7 +633,8 @@ mod tests {
             loc,
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(1),
-                column: OneIndexed::from_zero_indexed(0)
+                column: OneIndexed::from_zero_indexed(0),
+                end_column: None,
             }
         );
 
@@ -623,7 +644,8 @@ mod tests {
             loc,
             SourceLocation {
                 row: OneIndexed::from_zero_indexed(1),
-                column: OneIndexed::from_zero_indexed(5)
+                column: OneIndexed::from_zero_indexed(5),
+                end_column: None,
             }
         );
     }
